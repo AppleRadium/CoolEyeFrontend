@@ -8,7 +8,7 @@ function Inventory(props) {
 
         console.log(props.fooditem.Item)
         console.log(props.fooditem.Count)
-        console.log(props.fooditem.itemId)
+        console.log(props.fooditem._id)
 
         axios.delete(`https://protected-dawn-61147-56a85301481c.herokuapp.com/fooditem/${itemId}`)
             .then(response => {
