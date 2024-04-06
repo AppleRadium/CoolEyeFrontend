@@ -42,7 +42,7 @@ useEffect(() => {
       <h4 className = "card text-white bg-dark mb-3"> Temperature and Humidity</h4>
       <TandH/>
       <h4 className = "card text-white bg-dark mb-3"> Input</h4>
-      <h5>NOTE: Refresh upon every add and delete to see the update item list!</h5>
+      <h5>NOTE: Refresh upon every add and delete to see the updated item list!</h5>
       <span>
         <input className = "mb-2 form-control titleIn" onChange ={event =>setFoodItem(event.target.value)} placeholder='Name of Food Item'/>
         <input className = "mb-2 form-control titleIn" onChange ={event =>setCount(event.target.value)} placeholder='Item Count'/>
