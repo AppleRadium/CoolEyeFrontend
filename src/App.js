@@ -39,15 +39,16 @@ useEffect(() => {
       <h1 className = "card text-white bg-primary mb-1" >
         CoolEye</h1>
       <div className = "card-body"> 
-      <h5 className = "card text-white bg-dark mb-3"> Temperature and Humidity</h5>
+      <h4 className = "card text-white bg-dark mb-3"> Temperature and Humidity</h4>
       <TandH/>
-      <h5 className = "card text-white bg-dark mb-3"> Input</h5>
+      <h4 className = "card text-white bg-dark mb-3"> Input</h4>
+      <h5>NOTE: Refresh upon every add and delete to see the update item list!</h5>
       <span>
         <input className = "mb-2 form-control titleIn" onChange ={event =>setFoodItem(event.target.value)} placeholder='Name of Food Item'/>
         <input className = "mb-2 form-control titleIn" onChange ={event =>setCount(event.target.value)} placeholder='Item Count'/>
          <button className="btn btn-outline-primary mx-2 mb-3" style={{'borderRadius':'50px',"fontWeight":"bold"}} onClick={addFoodItem}>Add Food Item</button>
       </span>
-      <h5 className = "card text-white bg-dark mb-3"> Inventory</h5>
+      <h4 className = "card text-white bg-dark mb-3"> Inventory</h4>
       <div className="inventory-list">
       <ListView inventory={inventory} />
       </div>
