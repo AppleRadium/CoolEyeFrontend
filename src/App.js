@@ -4,6 +4,7 @@ import axios from 'axios'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import ListView from "./components/ListView"
 import TandH from "./components/TandH"
+import LatestImage from './components/LatestImage';
 
 function App() {
   const [inventory, setInventory] = useState([])
@@ -39,6 +40,8 @@ useEffect(() => {
       <h1 className = "card text-white bg-primary mb-1" >
         CoolEye</h1>
       <div className = "card-body"> 
+      <h4 className = "card text-white bg-dark mb-3"> Latest Image</h4>
+      <LatestImage/>
       <h4 className = "card text-white bg-dark mb-3"> Temperature and Humidity</h4>
       <TandH/>
       <h4 className = "card text-white bg-dark mb-3"> Input</h4>

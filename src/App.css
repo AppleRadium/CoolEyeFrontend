@@ -9,3 +9,8 @@
   overflow-y: scroll;
   /* Additional styling for scrollbar, padding, etc., can go here */
 }
+.image-style {
+  width: 600px;
+  height: auto;
+  border: 2px solid black;
+}
