@@ -1,34 +1,44 @@
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
-import React, {useState, useEffect} from 'react';
+function LatestImage() {
+  const [imageUrl, setImageUrl] = useState('');
+  const [error, setError] = useState('');
 
-function LatestImage(){
-    const [imageUrl, setImageUrl] = useState('');
-    const [error, setError] = useState('');
-  
-    useEffect(() => {
-      const fetchImage = async () => {
-        try {
-          const response = await fetch('https://protected-dawn-61147-56a85301481c.herokuapp.com/image/upload', { method: 'GET' });
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          // Generate a URL for the blob
-          const imageBlob = await response.blob();
-          const imageObjectURL = URL.createObjectURL(imageBlob);
-          setImageUrl(imageObjectURL);
-        } catch (error) {
-          console.error('Error fetching image:', error);
-          setError('Failed to load image');
-        }
-      };
-  
-      fetchImage();
-    }, []);
-  
-    return (
-      <div>
-        {error && <p>{error}</p>}
-        {imageUrl && <img src={imageUrl} alt="Latest Uploaded" className = "image-style"/>}
-      </div>
-    );
-}export default LatestImage
+  useEffect(() => {
+    // Replace 'your-backend-endpoint' with the actual endpoint URL
+    const endpoint = 'https://protected-dawn-61147-56a85301481c.herokuapp.com/image/latest';
+    
+    axios({
+      method: 'get',
+      url: endpoint,
+      responseType: 'blob'  // Important to handle binary data
+    })
+    .then(response => {
+      // Create a local URL to display the image
+      const imageObjectURL = URL.createObjectURL(response.data);
+      setImageUrl(imageObjectURL);
+    })
+    .catch(error => {
+      console.error('Error fetching the latest image:', error);
+      setError('Failed to load the latest image.');
+    });
+
+    // Cleanup the created URL to avoid memory leaks
+    return () => {
+      if (imageUrl) {
+        URL.revokeObjectURL(imageUrl);
+      }
+    };
+  }, []);  // Empty dependency array means this effect runs once after initial render
+
+  return (
+    <div>
+      <h4>Latest Image</h4>
+      {error && <p>{error}</p>}
+      {imageUrl ? <img src={imageUrl} alt="Latest Uploaded" style={{ width: '200px', height: 'auto', border: '2px solid black' }} /> : <p>Loading...</p>}
+    </div>
+  );
+}
+
+export default LatestImage;
