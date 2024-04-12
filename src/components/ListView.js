@@ -7,7 +7,7 @@ export default function ListView(props) {
         {props.inventory && props.inventory.length > 0 ? (
           <ul>
             {props.inventory.map((fooditem, index) => (
-              <Inventory key={index} fooditem={fooditem} />
+              <Inventory key={index} fooditem={fooditem}/>
             ))}
           </ul>
         ) : (

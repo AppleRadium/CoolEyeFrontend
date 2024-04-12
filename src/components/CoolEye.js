@@ -2,8 +2,7 @@ import axios from 'axios'
 import React from 'react'
 
 function Inventory(props) {
-   
-
+    
     const deleteFoodItem = (unique_id) => {
 
         console.log(props.fooditem.Item)

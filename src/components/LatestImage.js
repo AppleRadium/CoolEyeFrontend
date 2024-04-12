@@ -5,10 +5,11 @@ function LatestImage() {
   const [imageUrl, setImageUrl] = useState('');
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    // Replace 'your-backend-endpoint' with the actual endpoint URL
-    const endpoint = 'https://protected-dawn-61147-56a85301481c.herokuapp.com/image/latest';
-    
+  const fetchLatestImage = () => {
+    // Use the current timestamp as a query parameter to bypass browser caching
+    const timestamp = new Date().getTime();
+    const endpoint = `https://protected-dawn-61147-56a85301481c.herokuapp.com/image/latest?${timestamp}`;
+
     axios({
       method: 'get',
       url: endpoint,
@@ -23,20 +24,20 @@ function LatestImage() {
       console.error('Error fetching the latest image:', error);
       setError('Failed to load the latest image.');
     });
+  };
 
-    // Cleanup the created URL to avoid memory leaks
-    return () => {
-      if (imageUrl) {
-        URL.revokeObjectURL(imageUrl);
-      }
-    };
-  }, []);  // Empty dependency array means this effect runs once after initial render
+  useEffect(() => {
+    fetchLatestImage(); // Fetch immediately on initial render
+    const interval = setInterval(fetchLatestImage, 5000); // Refresh every 5000 milliseconds (5 seconds)
+
+    // Cleanup: clear the interval when the component is unmounted
+    return () => clearInterval(interval);
+  }, []); // Empty dependency array ensures this effect runs only once after the initial render
 
   return (
     <div>
-      <h4>Latest Image</h4>
       {error && <p>{error}</p>}
-      {imageUrl ? <img src={imageUrl} alt="Latest Uploaded" style={{ width: '200px', height: 'auto', border: '2px solid black' }} /> : <p>Loading...</p>}
+      {imageUrl ? <img src={imageUrl} alt="Latest Uploaded" style={{ width: '600px', height: 'auto', border: '2px solid black' }} /> : <p>Loading...</p>}
     </div>
   );
 }
