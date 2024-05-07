@@ -11,25 +11,38 @@ function App() {
   const [Item, setFoodItem] = useState('')
   const [Count, setCount] = useState('')
   
+  
   const fetchInventory = () => {
     axios.get('https://protected-dawn-61147-56a85301481c.herokuapp.com/fooditem/')
       .then(res => {
         console.log("Received data:", res.data);
-        setInventory(res.data); // Update the state with the fetched inventory
+        setInventory(res.data); 
       })
       .catch(error => console.error('Fetching inventory error:', error));
   };
-  //read all items
+ 
+  const refreshInventory = async () => {
+    try {
+        const response = await axios.get('https://protected-dawn-61147-56a85301481c.herokuapp.com/fooditem/');
+        setInventory(response.data);
+    } catch (error) {
+        console.error("Error fetching items list:", error);
+    }
+};
+useEffect(() => {
+  refreshInventory();  // Load the initial data
+}, []);
+
   useEffect(() => {
-    fetchInventory(); // Fetch the inventory initially
+    fetchInventory();
   }, []);
 
-  //Post an item
+ 
   const addFoodItem = () => {
     axios.post('https://protected-dawn-61147-56a85301481c.herokuapp.com/fooditem/', {"Item": Item, "Count": Count})
     .then(() => {
       console.log("Item added successfully");
-      fetchInventory(); // Refresh the inventory list after adding an item
+      fetchInventory();
     })
     .catch(err => console.error('Error adding item:', err));
 };
